@@ -26,6 +26,10 @@ Update the following variables in pc.vars:
 
 ```scrDir=${confDir}/SPECTRE/MITgcm/bin```
 
+Create the run directory:
+
+```mkdir -p /glade/scratch/your_login/tmp_running/chao50```
+
 Update the informations on the slurm batch job ```run.sh```:
 
 ```#PBS -l walltime=00:59:00  -->> required run time```
