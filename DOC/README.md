@@ -1,6 +1,8 @@
 To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
 
-```$ cd /your/pref/dir/```
+```$ confDir=${/your/pref/dir/}
+
+```$ cd ${confDir}```
 
 ```$ git clone https://github.com/quentinjamet/SPECTRE ```
 
@@ -16,7 +18,15 @@ Compile the code:
 Go to run directory:
 ```$ cd ./memb000/```
 
-Update the information on the slurm batch job ```run.sh```:
+Update the following variables in pc.vars:
+
+```confDir=${conDir}/SPECTRE/MITgcm/```
+
+```runDir=/glade/scratch/your_login/tmp_running/chao50```
+
+```scrDir=${confDir}/SPECTRE/MITgcm/bin```
+
+Update the informations on the slurm batch job ```run.sh```:
 
 ```#PBS -l walltime=00:59:00  -->> required run time```
 
