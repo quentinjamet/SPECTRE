@@ -3,12 +3,19 @@
 
 The objective of this proposal is to contribute to eddy parameterization by means of novel examinations of ensembles of ocean simulations.
 
+To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
+
+```> cd /your/pre/dir/```
+
+```> git clone https://github.com/quentinjamet/SPECTRE ```
+
+
 ## Configuration
 
 ![alt tag](files/bathy_chao50_GEBCO_update1.png)
 
 ## Initial conditions, open boundaries and atmospheric forcing
-Scripts used to build the inputs (forcing and initial conditions), along with their description, can be found in ```./mk_config/```.
+Example of scripts to generate the model grid, the bathymetry, the surface and open boundary forcing as well as initial conditions are available in ```./mk_config/```.
 
 - Initial conditions: The 48 members are initialized with the same initial conditions as those used to produce [CHAOCEAN](https://github.com/quentinjamet/chaocean), 1/12 North Atlantic ensemble simulations.
 
