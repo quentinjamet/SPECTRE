@@ -3,32 +3,6 @@
 
 The objective of this proposal is to contribute to eddy parameterization by means of novel examinations of ensembles of ocean simulations.
 
-To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
-
-```$ cd /your/pref/dir/```
-
-```$ git clone https://github.com/quentinjamet/SPECTRE ```
-
-Go to the repo, then config directory:
-```$ cd ./SPECTRE/MITgcm/```
-
-Create the compiling and executable directory
-```$ mkdir build exe```
-
-Compile the code:
-```$ ./Compile```
-
-Go to run directory:
-```$ cd ./memb000/```
-
-Update the information on the slurm batch job ```run.sh```:
-
-```#PBS -l walltime=00:59:00  -->> required run time```
-
-```#PBS -M quentin.jamet@univ-grenoble-alpes.fr```
-
-Run the code:
-```$ qsub run.sh```
 
 ## Configuration
 
