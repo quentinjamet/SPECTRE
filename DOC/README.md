@@ -1,4 +1,4 @@
-To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
+To install, define a directory ```tmpDir``` and clone the project there (nothing heaving will be placed in here, this can be your /home/).
 
 ```$ tmpDir=${/your/pref/dir/}```
 
@@ -18,7 +18,7 @@ Compile the code:
 Go to run directory:
 ```$ cd ./memb000/```
 
-Update the following variables in pc.vars (the ${tmpDir} need to be replace by their actual value, i.e. ```/your/pref/dir/``` int this example):
+Update the following variables in pc.vars (the ```${tmpDir}``` need to be replace by their actual value, i.e. ```/your/pref/dir/``` int this example):
 
 ```confDir=${tmpDir}/SPECTRE/MITgcm/```
 
@@ -53,3 +53,5 @@ Run the code:
 - Start an interaction session
 
 ```qsub -I -l select=1:ncpus=1:mpiprocs=1:mem=109GB -l walltime=05:00:00 -q regular -A UFSU0023```
+
+- The script ```$tmpDir/MITgcm/bin/mk_memb_XXX.sh``` takes care of generating additional ensemble members based on a reference (```memb000``` in the example)
