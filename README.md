@@ -9,8 +9,8 @@ To install, go to your preferred directoy (nothing heaving will be placed in the
 
 ```$ git clone https://github.com/quentinjamet/SPECTRE ```
 
-Go to the repo directory:
-```$ cd ./SPECTRE/```
+Go to the repo, then config directory:
+```$ cd ./SPECTRE/MITgcm/```
 
 Compile the code:
 ```$ ./Compile```
