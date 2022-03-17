@@ -1,8 +1,8 @@
 To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
 
-```$ confDir=${/your/pref/dir/}```
+```$ tmpDir=${/your/pref/dir/}```
 
-```$ cd ${confDir}```
+```$ cd ${tmpDir}```
 
 ```$ git clone https://github.com/quentinjamet/SPECTRE ```
 
@@ -18,13 +18,13 @@ Compile the code:
 Go to run directory:
 ```$ cd ./memb000/```
 
-Update the following variables in pc.vars:
+Update the following variables in pc.vars (the ${tmpDir} need to be replace by their actual value, i.e. ```/your/pref/dir/``` int this example):
 
-```confDir=${conDir}/SPECTRE/MITgcm/```
+```confDir=${tmpDir}/SPECTRE/MITgcm/```
 
 ```runDir=/glade/scratch/your_login/tmp_running/chao50```
 
-```scrDir=${confDir}/SPECTRE/MITgcm/bin```
+```scrDir=${tmpDir}/SPECTRE/MITgcm/bin```
 
 Create the run directory:
 
@@ -34,7 +34,7 @@ Update the informations on the slurm batch job ```run.sh```:
 
 ```#PBS -l walltime=00:59:00  -->> required run time```
 
-```#PBS -M quentin.jamet@univ-grenoble-alpes.fr```
+```#PBS -M your@adress.com```
 
 Run the code:
 ```$ qsub run.sh```

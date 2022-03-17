@@ -6,7 +6,7 @@ The objective of this proposal is to contribute to eddy parameterization by mean
 
 ## Configuration
 
-![alt tag](files/bathy_chao50_GEBCO_update1.png)
+![alt tag](files/bathy_chao50_GEBCO_update1_spectre_logo.png)
 
 ## Initial conditions, open boundaries and atmospheric forcing
 Example of scripts to generate the model grid, the bathymetry, the surface and open boundary forcing as well as initial conditions are available in ```./mk_config/```.
