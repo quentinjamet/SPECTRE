@@ -1,6 +1,6 @@
 To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
 
-```$ confDir=${/your/pref/dir/}
+```$ confDir=${/your/pref/dir/}```
 
 ```$ cd ${confDir}```
 
