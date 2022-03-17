@@ -12,6 +12,9 @@ To install, go to your preferred directoy (nothing heaving will be placed in the
 Go to the repo, then config directory:
 ```$ cd ./SPECTRE/MITgcm/```
 
+Create the compiling directory
+```$ mkdir build```
+
 Compile the code:
 ```$ ./Compile```
 
