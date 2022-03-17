@@ -1,0 +1,53 @@
+#!sh Open-boundaries
+ &OBCS_PARM01
+OB_Ieast=1150*-1,
+OB_Iwest=1150*1,
+OB_Jnorth=1800*-1,
+OB_Jsouth=1800*1,
+useOrlanskiEast=.FALSE.,
+useOrlanskiWest=.FALSE.,
+useOrlanskiNorth=.FALSE.,
+useOrlanskiSouth=.FALSE.,
+useOBCSprescribe=.TRUE.,
+useOBCSsponge=.TRUE.,
+#useOBCSbalance=.TRUE.,
+# North
+ OBNuFile   ='uE_NORTH.bin',
+ OBNvFile   ='vN_NORTH.bin',
+ OBNtFile   ='T_NORTH.bin',
+ OBNsFile   ='S_NORTH.bin',
+# South
+ OBSuFile   ='uE_SOUTH.bin',
+ OBSvFile   ='vN_SOUTH.bin',
+ OBStFile   ='T_SOUTH.bin',
+ OBSsFile   ='S_SOUTH.bin',
+# East
+ OBEuFile   ='uE_EAST.bin',
+ OBEvFile   ='vN_EAST.bin',
+ OBEtFile   ='T_EAST.bin',
+ OBEsFile   ='S_EAST.bin',
+# West
+ OBWuFile   ='uE_WEST.bin',
+ OBWvFile   ='vN_WEST.bin',
+ OBWtFile   ='T_WEST.bin',
+ OBWsFile   ='S_WEST.bin',
+ &end
+
+# # Orlanski parameters
+# &OBCS_PARM02
+# Cmax=0.45,
+# cVelTimeScale=1000.,
+# &end
+
+# SPONGE parameters
+ &OBCS_PARM03
+ spongeThickness=2,
+# spongeThickness=12, 
+#-> see Jensen_JMS1998.pdf 
+#(Martinsen and Engedahl 1987 used 3-10 grid pts)
+ Urelaxobcsinner=86400,
+ Vrelaxobcsinner=86400,
+# 6h
+ Urelaxobcsbound=2160,
+ Vrelaxobcsbound=2160,
+ &end

@@ -1,0 +1,29 @@
+#! /usr/bin/env bash
+
+dir=$1
+nIter0=$2
+nTimeSteps=$3
+pChkptFreq=$4
+chkptFreq=$5
+dumpFreq=$6
+
+#-----------------------------------------------------------------------------#
+#                             Set data parameters                             #
+#-----------------------------------------------------------------------------#
+itr0=`egrep 'nIter0' $dir/data | sed 's/ nIter0=//'| sed 's/,$//'`
+sed "s/ nIter0=$itr0/ nIter0=$nIter0/" $dir/data > $dir/data.1
+
+nts=`egrep 'nTimeSteps' $dir/data.1 | sed 's/ nTimeSteps=//'| sed 's/,$//'`
+sed "s/ nTimeSteps=$nts/ nTimeSteps=$nTimeSteps/" $dir/data.1 > $dir/data.2
+
+Pchk=`egrep 'pChkptFreq' $dir/data.2 | sed 's/ pChkptFreq=//'| sed 's/,$//'`
+sed "s/ pChkptFreq=$Pchk/ pChkptFreq=$pChkptFreq/" $dir/data.2 > $dir/data.3
+
+chk=`egrep 'chkptFreq' $dir/data.3 | sed 's/ chkptFreq=//'| sed 's/,$//'`
+sed "s/ chkptFreq=$chk/ chkptFreq=$chkptFreq/" $dir/data.3 > $dir/data.4
+
+dmp=`egrep 'dumpFreq' $dir/data.4 | sed 's/ dumpFreq=//'| sed 's/,$//'`
+sed "s/ dumpFreq=$dmp/ dumpFreq=$dumpFreq/" $dir/data.4 > $dir/data.5
+
+mv $dir/data.5 $dir/data
+rm $dir/data.1 $dir/data.2 $dir/data.3 $dir/data.4 

@@ -1,0 +1,8 @@
+# KPP parameters
+ &KPP_PARM01
+ KPPmixingMaps   = .FALSE.,
+ KPPwriteState   = .FALSE.,
+ KPP_ghatUseTotalDiffus=.TRUE.,
+ KPPuseDoubleDiff = .TRUE.,
+# Ricr = 0.45,
+ &

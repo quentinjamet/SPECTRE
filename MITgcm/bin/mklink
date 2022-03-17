@@ -1,0 +1,98 @@
+#! /usr/bin/env bash
+
+runDir2=$1
+confName=$2
+confDir=$3
+inDir=$4
+yr=$5
+imem=$6
+exe=$7
+iit=$8
+iit0=$9
+outDir=${10}
+monitor=${11}
+
+#-----------------------------------------------------------------------------#
+#                             INPUT FILES	                              #
+#-----------------------------------------------------------------------------#
+#-- specific to each member --
+ln -s $confDir/memb$imem/data	$runDir2/data
+#-- common to all members --
+ln -s $confDir/input/data.kpp     	$runDir2/data.kpp
+ln -s $confDir/input/data.obcs     	$runDir2/data.obcs
+ln -s $confDir/input/data.pkg     	$runDir2/data.pkg
+ln -s $confDir/input/eedata     	$runDir2/eedata
+ln -s $confDir/exe/$exe			$runDir2/$exe
+ln -s $confDir/memb$imem/data.diagnostics		$runDir2/data.diagnostics
+ln -s $confDir/input/data.cheapaml	$runDir2/data.cheapaml
+
+#-----------------------------------------------------------------------------#
+#                             GRID		                              #
+#-----------------------------------------------------------------------------#
+ln -s $inDir/grid_50/dx50.bin             $runDir2/dx50.bin
+ln -s $inDir/grid_50/dy50.bin             $runDir2/dy50.bin
+ln -s $inDir/grid_50/dz50.bin             $runDir2/dz50.bin
+ln -s $inDir/grid_50/topo50.bin           $runDir2/topo50.bin
+
+#-----------------------------------------------------------------------------#
+#                             OBCS		                              #
+#-----------------------------------------------------------------------------#
+
+dir_obcs=$inDir/bound_cond_50
+
+#-- south bdy --
+ln -s $dir_obcs/$yr/ic$imem/s_south_${yr}_ic${imem}.bin		$runDir2/S_SOUTH.bin
+ln -s $dir_obcs/$yr/ic$imem/t_south_${yr}_ic${imem}.bin		$runDir2/T_SOUTH.bin
+ln -s $dir_obcs/$yr/ic$imem/uE_south_${yr}_ic${imem}.bin	$runDir2/uE_SOUTH.bin
+ln -s $dir_obcs/$yr/ic$imem/vN_south_${yr}_ic${imem}.bin	$runDir2/vN_SOUTH.bin
+#-- north bdy --
+ln -s $dir_obcs/$yr/ic$imem/s_north_${yr}_ic${imem}.bin		$runDir2/S_NORTH.bin
+ln -s $dir_obcs/$yr/ic$imem/t_north_${yr}_ic${imem}.bin		$runDir2/T_NORTH.bin
+ln -s $dir_obcs/$yr/ic$imem/uE_north_${yr}_ic${imem}.bin	$runDir2/uE_NORTH.bin
+ln -s $dir_obcs/$yr/ic$imem/vN_north_${yr}_ic${imem}.bin	$runDir2/vN_NORTH.bin
+#-- east bdy --
+ln -s $dir_obcs/$yr/ic$imem/s_east_${yr}_ic${imem}.bin	$runDir2/S_EAST.bin
+ln -s $dir_obcs/$yr/ic$imem/t_east_${yr}_ic${imem}.bin	$runDir2/T_EAST.bin
+ln -s $dir_obcs/$yr/ic$imem/uE_east_${yr}_ic${imem}.bin	$runDir2/uE_EAST.bin
+ln -s $dir_obcs/$yr/ic$imem/vN_east_${yr}_ic${imem}.bin	$runDir2/vN_EAST.bin
+#-- west bdy --
+ln -s $dir_obcs/$yr/ic$imem/s_west_${yr}_ic${imem}.bin	$runDir2/S_WEST.bin
+ln -s $dir_obcs/$yr/ic$imem/t_west_${yr}_ic${imem}.bin	$runDir2/T_WEST.bin
+ln -s $dir_obcs/$yr/ic$imem/uE_west_${yr}_ic${imem}.bin	$runDir2/uE_WEST.bin
+ln -s $dir_obcs/$yr/ic$imem/vN_west_${yr}_ic${imem}.bin	$runDir2/vN_WEST.bin
+
+
+#-----------------------------------------------------------------------------#
+#                             cheapAML		                              #
+#-----------------------------------------------------------------------------#
+
+dir_atm=$inDir/atmo_cond_50
+ln -s $dir_atm/${yr}/t2_${yr}.bin	$runDir2/t2.bin
+ln -s $dir_atm/${yr}/q2_${yr}.bin	$runDir2/q2.bin
+ln -s $dir_atm/${yr}/u10_${yr}.bin	$runDir2/u10.bin
+ln -s $dir_atm/${yr}/v10_${yr}.bin	$runDir2/v10.bin
+ln -s $dir_atm/${yr}/radlw_${yr}.bin	$runDir2/radlw.bin
+ln -s $dir_atm/${yr}/radsw_${yr}.bin	$runDir2/radsw.bin
+#precip are climatological for 1958-1978
+#use extended (nt_record+2) climatological precip for for this period
+if [ ${yr} -le 1976 ]; then
+ ln -s $dir_atm/precip_climExtd.bin      $runDir2/precip.bin
+else
+ ln -s $dir_atm/${yr}/precip_${yr}.bin   $runDir2/precip.bin
+fi
+
+
+
+#-----------------------------------------------------------------------------#
+#                             pickup		                              #
+#-----------------------------------------------------------------------------#
+
+dir_ini=${inDir}/ini_cond_50
+ln -s ${dir_ini}/ic${imem}/eta_ini50_ic${imem}.bin	$runDir2/eta_ini.bin
+ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin	$runDir2/s_ini.bin
+ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin	$runDir2/t_ini.bin
+ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin	$runDir2/u_ini.bin
+ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin	$runDir2/v_ini.bin
+ln -s ${dir_ini}/ic${imem}/t2_ini50_ic${imem}.bin	$runDir2/t2_ini.bin
+ln -s ${dir_ini}/ic${imem}/q2_ini50_ic${imem}.bin	$runDir2/q2_ini.bin
+

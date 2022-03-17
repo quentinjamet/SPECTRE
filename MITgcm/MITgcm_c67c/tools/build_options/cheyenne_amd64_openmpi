@@ -1,0 +1,26 @@
+#
+#
+# Build options for Cheyenne at NCAR
+#
+
+FC=mpif90
+CC=mpicc
+DEFINES='-DALLOW_USE_MPI -DALWAYS_USE_MPI -DWORDLENGTH=4 -DNML_TERMINATOR'
+CPP='cpp  -traditional -P'
+EXTENDED_SRC_FLAG='-132'
+NOOPTFLAGS='-O2 -g -m64 -mtune=generic'
+LIBS=''
+INCLUDES=''
+
+if test "x$DEVEL" != x ; then
+    FFLAGS="$FFLAGS  -W0 -WB -convert big_endian -assume byterecl -fPIC -O0 -g -noalign -fpstkchk -check all -fpe0 -traceback -ftrapuv -fpmodel except -warn all -march=corei7 -axAVX"
+else
+    FFLAGS="$FFLAGS  -W0 -WB -convert big_endian -assume byterecl -fPIC -march=corei7 -axAVX -g"
+fi
+
+if test "x$IEEE" = x ; then
+        FOPTIM='-O2 -align  -ip'
+        else
+        FOPTIM='-O2 -align  -ip -mp'
+fi
+CFLAGS='-O2 -ip -fPIC'

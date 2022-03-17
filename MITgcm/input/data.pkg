@@ -1,0 +1,8 @@
+#!sh Packages
+ &PACKAGES
+ useGMRedi=.FALSE.,
+ useOBCS=.TRUE.,
+ useKPP=.TRUE.,
+ useCHEAPAML=.TRUE.,
+ useDIAGNOSTICS=.FALSE.,
+ &end

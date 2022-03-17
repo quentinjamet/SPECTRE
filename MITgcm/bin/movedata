@@ -1,0 +1,95 @@
+#! /usr/bin/env bash
+
+# -- set inputs parameters --
+runDir=$1
+outDir=$2
+period=$3
+sit0=$4
+mem_nb=$5
+confName=$6
+
+# -- local parameters --
+report=MoveReport.txt
+tmpDir=${outDir}/memb${mem_nb}
+
+# -- sanity check --
+echo "Actual start time of script : "`date`       > $report
+echo "Run directory               : "$runDir      >> $report 
+echo "Outpur directory            : "$tmpDir      >> $report 
+echo "Periode                     : "$period      >> $report 
+
+#-----------------------------------------------------------------------------#
+#                                 Make directories                            #
+#-----------------------------------------------------------------------------#
+
+echo "--------------------- "                    >> $report 
+echo "Creat directories "                        >> $report 
+echo "--------------------- "                    >> $report 
+
+dataDir=$tmpDir/run$period    
+ocnDataDir=$dataDir/ocn       
+cheapDir=$dataDir/cheapaml     
+mkdir -p $dataDir;    chmod a+rx $dataDir
+mkdir -p $ocnDataDir; chmod a+rx $ocnDataDir
+mkdir -p $cheapDir;   chmod a+rx $cheapDir
+if [ $confName = orar ] && [ $mem_nb -ge 36 ] ; then
+  ptrDir=$dataDir/ptr
+  mkdir -p $ptrDir;    chmod a+rx $ptrDir
+fi 
+
+#-----------------------------------------------------------------------------#
+#                                 Move ocean                                  #
+#-----------------------------------------------------------------------------#
+
+echo "Move ocean data to : "                           >> $report 
+echo "--  " $ocnDataDir                                >> $report 
+mv $runDir/diag_ocnTave.* 			$ocnDataDir    
+mv $runDir/diag_ocnSurf.* 			$ocnDataDir    
+if [ $confName = orar ]; then 
+ if [ $mem_nb -eq 00 ] ; then
+  mv $runDir/T.*				$ocnDataDir    
+  mv $runDir/S.*				$ocnDataDir    
+  mv $runDir/U.*				$ocnDataDir    
+  mv $runDir/V.*				$ocnDataDir    
+  mv $runDir/W.*  				$ocnDataDir    
+  mv $runDir/Eta.*  				$ocnDataDir    
+ elif [ $mem_nb = 23 ]; then
+  mv $runDir/diagKEs.*                   	$ocnDataDir
+  mv $runDir/tracer_wb.*                 	$ocnDataDir
+ elif [ $mem_nb -ge 24  ]; then
+  mv $runDir/diag_ocnSnap.*			$ocnDataDir
+  mv $runDir/diag_Tbgt3D.*			$ocnDataDir
+  mv $runDir/diag_Tbgt2D.*			$ocnDataDir
+  mv $runDir/diag_Sbgt3D.*			$ocnDataDir
+  mv $runDir/diag_Sbgt2D.*			$ocnDataDir
+  mv $runDir/diag_ADVh_mom.*			$ocnDataDir
+ fi
+fi # diff orar members 
+
+#-- pickups --
+mv $runDir/pickup.$sit0.*               $ocnDataDir    
+echo "--------------------- "                          >> $report 
+
+#-----------------------------------------------------------------------------#
+#                                 Move cheapAML                               #
+#-----------------------------------------------------------------------------#
+
+echo "Move cheapAML data to :"                         >> $report 
+echo "--  " $cheapDir                                  >> $report 
+mv $runDir/diag_cheapAML.* 		$cheapDir    
+if [ $mem_nb -eq 00 ] && [ $confName = orar ] ; then 
+ mv $runDir/snap_cheapAML.* 		$cheapDir     
+fi
+#-- pickups --
+mv $runDir/pickup_cheapaml.$sit0.*      $cheapDir    
+echo "--------------------- "                          >> $report 
+
+#-----------------------------------------------------------------------------#
+#                                 Move STDOUT and others                      #
+#-----------------------------------------------------------------------------#
+
+echo "Move STDOUT and others to :"                     >> $report 
+echo "--  " $dataDir                                   >> $report 
+mv STDOUT.0000			  $dataDir/STDOUT.0000
+mv available_diagnostics.log      $dataDir
+mv $runDir/$report                $dataDir/$report

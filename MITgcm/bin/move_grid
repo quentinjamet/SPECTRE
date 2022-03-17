@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+
+# -- set inputs parameters --
+runDir=$1
+outDir=$2
+
+# -- local parameters --
+report=MoveReport.txt
+tmpDir=${outDir}/gridMIT
+
+#-----------------------------------------------------------------------------#
+#                                 Make directories                            #
+#-----------------------------------------------------------------------------#
+
+if [ ! -d $tmpDir ]; then
+ mkdir -p $tmpDir
+else
+ rm -rf $tmpDir/*
+fi
+
+#-----------------------------------------------------------------------------#
+#                                 Move grid                                   #
+#-----------------------------------------------------------------------------#
+mv ${runDir}/XC*		${tmpDir}/
+mv ${runDir}/XG*		${tmpDir}/
+mv ${runDir}/YC*		${tmpDir}/
+mv ${runDir}/YG*		${tmpDir}/
+mv ${runDir}/RA*		${tmpDir}/
+mv ${runDir}/RC*		${tmpDir}/
+mv ${runDir}/RF*		${tmpDir}/
+mv ${runDir}/DR*		${tmpDir}/
+mv ${runDir}/DX*		${tmpDir}/
+mv ${runDir}/DY*		${tmpDir}/
+mv ${runDir}/hFac*		${tmpDir}/
+mv ${runDir}/maskIn*		${tmpDir}/
+mv ${runDir}/Depth.*		${tmpDir}/
+mv ${runDir}/PHref*		${tmpDir}/
+mv ${runDir}/RhoRef.*		${tmpDir}/
+mv ${runDir}/CheapHgrid.*	${tmpDir}/
+mv ${runDir}/CheapMask.*	${tmpDir}/
+
+
+
