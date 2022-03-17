@@ -5,10 +5,26 @@ The objective of this proposal is to contribute to eddy parameterization by mean
 
 To install, go to your preferred directoy (nothing heaving will be placed in there, this can be your /home/)
 
-```> cd /your/pre/dir/```
+```$ cd /your/pref/dir/```
 
-```> git clone https://github.com/quentinjamet/SPECTRE ```
+```$ git clone https://github.com/quentinjamet/SPECTRE ```
 
+Go to the repo directory:
+```$ cd ./SPECTRE/```
+
+Compile the code:
+```$ ./Compile```
+
+Go to run directory:
+```$ cd ./memb000/```
+
+Update the information on the slurm batch job ```run.sh```:
+
+Run the code:
+```$ qsub run.sh```
+
+(To check the status of you job:
+```qstat -u your_login```)
 
 ## Configuration
 
