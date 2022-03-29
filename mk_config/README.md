@@ -3,30 +3,26 @@ our previous 1/12, North Atlantic [CHAOCEAN](https://github.com/quentinjamet/cha
 
 ## Descrition of the scripts
 
-- launch_python.slurm  
+- mk_grid.py  
 
 - mk_bathy.py  
 
 - mk_ics.py   
 
+- mk_obcs.py
+
 - mk_atm.py
 
-- mk_grid.py  
-
-- mk_obcs.py
 
 
 ## The steps to make a new configuration
 
-- First, make the grid with desired dx, dy, and dz grid parameters. The script ```mk_grid.py``` also provides ways to generate constant initial conditions, atmospheric forcing and opend boundary conditions in order to generate the model mesh. 
+- First, make the grid with desired dx, dy, and dz grid parameters. The script ```mk_grid.py``` will do that for you, along with generating flat bottom bathymetry, constant initial conditions, atmospheric forcing and opend boundary conditions in order to generate the model mesh at first. 
 
-- Update the ```./code.SIZE.h``` and compile the code.
+- Go to ```${your_pref_dir}/SPECTRE/MITgcm/```, and run for a few (3) time steps to produce the desired grid using ```./memb000/run_mk_grid.sh```. Don't forget to update ```./code/SIZE.h``` before recompiling, and ```./input/data.obcs``` before running! 
 
-- update the ```./input/data.obcs``` file as well.
+- Make the bathymetry with ```mk_bathy.py```. Depending on the domain, you may need to fill in some grid points by hand to avoid issues. By experience, this may also arise after a decent number of iterations in shallow water area due to cheapaml.
 
-- 
+- Re-run ```./memb000/run_mk_grid.sh``` with this new bathymetry.
 
-- The bash script ```./SPECTRE/MITgcm/mk_grid/run_mk_grid.sh``` is made to run for 3 time steps. It uses the ```mklink_mk_grid``` script to make appropiate links for this short run.
-
-- 
-
+- Construct the appropriate initial conditions, boundary and atmospheric forcing files with ```mk_ics.py```, ```mk_obcs.py``` and ```mk_atm.py```.

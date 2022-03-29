@@ -1,6 +1,6 @@
 To install, define a directory ```tmpDir``` and clone the project there (nothing heaving will be placed in here, this can be your /home/).
 
-```$ tmpDir=${/your/pref/dir/}```
+```$ tmpDir=/your/pref/dir/```
 
 ```$ cd ${tmpDir}```
 
