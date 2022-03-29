@@ -4,7 +4,7 @@ import numpy as np
 dir_out = '/glade/p/univ/ufsu0011/data_in/grid_50/'
 
 #-- original mesh parameters --
-[nr, ny, nx] = [75, 1150, 1800]
+[nr, ny, nx] = [75, 1000,2050]
 delxy = 1/50
 
 #-----------------------------------------
@@ -86,6 +86,7 @@ for ivar in range(nvar):
 tmpdir='/glade/p/univ/ufsu0011/data_in/bound_cond_50/mk_grid'
 nt = 73
 varN = ['t', 's', 'uE', 'vN']
+iniVal = [15.0, 35.0, 0.0, 0.0]
 nvar = len(varN)
 bbdy = ['south', 'north', 'east', 'west']
 nbdy = len(bbdy)
@@ -96,7 +97,7 @@ for ibdy in range(nbdy):
     nxy = ny
   for ivar in range(nvar):
     print("Make boundary conditions for %s at %s" %(varN[ivar], bbdy[ibdy]))
-    tmpvar = np.zeros([nt+2, nr, nxy])
+    tmpvar = iniVal[ivar] * np.ones([nt+2, nr, nxy])
     f = open( str("%s/%s_%s_cst.bin" %(tmpdir, varN[ivar], bbdy[ibdy]) ), 'wb')
     tmpvar.astype('>f4').tofile(f)
     f.close()

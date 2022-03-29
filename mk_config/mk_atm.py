@@ -4,6 +4,7 @@ import MITgcmutils as mit
 #import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 import os
+import gc
 from multiprocessing import Pool
 
 #plt.ion()
@@ -31,31 +32,37 @@ nvar = len(varN)
 # (should agree with those requested when lauching the interactive session)
 # i.e. if nprocs = 36 (one full node)
 # qsub -I -l select=1:ncpus=36:mpiprocs=36
-#nproc=1462
 nproc=36
 #------------------------------------------------------------------
 #       Make Atmospheric forcing files from our previous 1/12 runs
 # -->>  need to update with 6-hourly forcing files from original DFS
 #------------------------------------------------------------------
 #-- grid params --
-#- 1/12 -
-xC12 = mit.rdmds(dir_grd12 + 'XC')
-yC12 = mit.rdmds(dir_grd12 + 'YC')
-xy12 = np.zeros([(ny12)*(nx12), 2])
-xy12[:, 0] = xC12.reshape([ny12*nx12])
-xy12[:, 1] = yC12.reshape([ny12*nx12])
+# parent and child grid origin are co-localized
+rSphere = 6370000.0
+
 #- 1/50 -
-xC50 = mit.rdmds(dir_grd50 + 'XC')
-yC50 = mit.rdmds(dir_grd50 + 'YC')
-[ny50, nx50] = xC50.shape
+x50deg = mit.rdmds(dir_grd50 + 'XC')
+y50deg = mit.rdmds(dir_grd50 + 'YC')
+[ny50, nx50] = x50deg.shape
+xx50 = np.radians(x50deg - x50deg[0,0]) * rSphere * np.cos(np.radians(y50deg))
+yy50 = np.radians(y50deg - y50deg[0,0]) * rSphere
+#- 1/12 -
+x12deg = mit.rdmds(dir_grd12 + 'XC')
+y12deg = mit.rdmds(dir_grd12 + 'YC')
+xx12 = np.radians(x12deg - x50deg[0,0]) * rSphere * np.cos(np.radians(y12deg))
+yy12 = np.radians(y12deg - y50deg[0,0]) * rSphere
+xy12 = np.zeros([(ny12)*(nx12), 2])
+xy12[:, 0] = xx12.reshape([ny12*nx12])
+xy12[:, 1] = yy12.reshape([ny12*nx12])
 
 #-- define horizontal interpolation --
 def hz_interp(iii):
   print("Interpolating %s, time: %04i" % (varN[ivar], iii) ) 
-  tmp_interp = griddata(xy12, var12[iii, :, :].reshape([ny12*nx12]), (xC50, yC50), method=mmeth)
+  tmp_interp = griddata(xy12, var12[iii, :, :].reshape([ny12*nx12]), (xx50, yy50), method=mmeth)
   return tmp_interp
 
-for ivar in range(6, nvar):
+for ivar in range(nvar):
   #ivar = 6
   #-- input file --
   if varN[ivar] == 'precip':
@@ -89,21 +96,10 @@ for ivar in range(6, nvar):
     var50.reshape([(nt+2)*ny50*nx50]).astype('>f4').tofile(f)
     f.close()
   #
-  del var12, var50
+  del var12, var50, tmp_var50
+  gc.collect() 
   
 
 exit()
-
-
-
-#-- interpolate --
-f = open( str("%s/%04i/%s_%04i.bin" % (dir_out, iper, varN[ivar], iper) ), 'ab' )
-for iit in range(0, nt+2):
-    print("Interpolate %s, time: %04i/%04i" % (varN[ivar], iit, nt+2))
-    var50 =  griddata(xy12, var12[iit, :, :].reshape([ny12*nx12]), (xC50, yC50), method='linear')
-    #- save -
-    var50.reshape([ny50*nx50]).astype('>f4').tofile(f)
-#
-f.close()
 
 
