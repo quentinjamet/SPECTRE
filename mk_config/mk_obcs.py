@@ -1,7 +1,6 @@
 import numpy as np
 import MITgcmutils as mit
 #import matplotlib.pyplot as plt
-#import xarray as xr
 import os
 import gc
 from scipy.interpolate import griddata
@@ -96,7 +95,7 @@ if not os.path.isdir(tmpdir):
   os.makedirs( tmpdir )
 
 #-- Loop over variables and boundaries --
-for ivar in range(3, nvar):
+for ivar in range(nvar):
   if varN[ivar] == 'uE':
     flag_repz = False	#to repeat grid points downward for vert. interp
     mmeth = 'linear'	#interpolation method
@@ -218,8 +217,8 @@ for ivar in range(3, nvar):
     #var12[-2, :, :, :] =  mit.rdmds( str("%s/memb%02i/run%04i/ocn/diag_ocnTave" \
     #        % (dir_in, iic, (iper+1)) ), \
     #        itrs=iters[-1]+d_iter, rec=varOrder[ivar], region=[iiw, iie, jjs, jjn], usememmap=True )
-    var12[-1, :, :, :] = var12[-3, :, :, :]
-    var12[-2, :, :, :] = var12[0, :, :, :]
+    var12[-1, :, :, :] = var12[0, :, :, :]
+    var12[-2, :, :, :] = var12[-3, :, :, :]
     #- make some adjustments near land points (FOR TRACER ONLY) -
     if varN[ivar] == 't' or varN[ivar] == 's':
       for iit in range(nt+2):
