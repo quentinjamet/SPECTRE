@@ -27,9 +27,9 @@ with (X, Y) the grid in [m] and (&theta;, &phi;) the grid in lon/lat.
 
 - ```mk_ics.py```: Interpolate 1/12 initial conditions onto the new, 1/50 downscaled model grid. The interpolation is first done in the horizontal, then in the vertical (the inverse produces larger errors near bathymetry). Following Joseph Schoonover's downscaling approach, land points on the parent, 1/12 model grid are reprated as the last wet grid point to the east for tracers in order to avoid interpolating with 0.0 in these regions. Similarly in the vertical the last wet points are repeated downward. Initial conditions are directly read from the pickup.XXXXXXXXXX.data files with appropriate variable (U, V, T, S, Eta) ordering. 
 
-- ```mk_obcs.py```: Interpolate 1/12 5-day averaged model output onto the open boundaries of the downscaled configuration. This is made for each member and each year. Note that two additional time records are needed in these forcing files for proper time interpolation at the begin and at the end of year. The two additional time records are placed at the end, where the last (second last) one corresponds to the last (first) time step of the preceding (following) year. [!!! Coded but not used for now (03/30/2022)!!!].
+- ```mk_obcs.py```: Interpolate 1/12, 5-day averaged model output onto the open boundaries of the downscaled configuration. This is made for each member and each year. Note that two additional time records are needed in these forcing files for proper time interpolation at the begin and at the end of year. The two additional time records are placed at the end, where the last (second last) one corresponds to the last (first) time step of the preceding (following) year. [!!! Coded but not used for now (03/30/2022)!!!].
 
-- ```mk_atm.py```: 
+- ```mk_atm.py```: Interpolate the forcing files used for our previous 1/12 ensemble simulations onto the new, downscaled 1/50 grid. Nothing particular to consider here since no bathymetry issues and the two additional time records are already included in the orginial foring files.
 
 
 
