@@ -11,7 +11,7 @@ line 126: ```val = [ parse1(s) for s in re.split(r'[, ] *',line) ]```
 
 The methode used to interpolate 1/12 field onto the new, 1/50 grid is to defined their repsective grid in [m] with co-localized origin. Analytically, this is done as follow: 
 
-$X_{50}(i,j) = R_{earth} (\theta_{50}(i, j)-\theta_{50}(i=0, j=0))cos(\phi_{50}(i, j)) $
+X<sub>50</sub>(i,j) = r<sub>earth</sub> (&theta;<sub>50</sub>(i, j)-&theta;<sub>50<\sub>(i=0, j=0)) cos($phi<sub>50<\sub>(i, j))
 
 h<sub>&theta;</sub>(x) = &theta;<sub>o</sub> x + &theta;<sub>1</sub>x
 
