@@ -13,7 +13,11 @@ The methode used to interpolate 1/12 field onto the new, 1/50 grid is to defined
 
 X<sub>50</sub>(i,j) = r<sub>earth</sub> (&theta;<sub>50</sub>(i, j)-&theta;<sub>50</sub>(i=0, j=0)) cos(&phi;<sub>50</sub>(i, j))
 
-h<sub>&theta;</sub>(x) = &theta;<sub>o</sub> x + &theta;<sub>1</sub>x
+Y<sub>50</sub>(i,j) = r<sub>earth</sub> (&phi;<sub>50</sub>(i, j)-&phi;<sub>50</sub>(i=0, j=0))
+
+X<sub>12</sub>(i,j) = r<sub>earth</sub> (&theta;<sub>12</sub>(i, j)-&theta;<sub>50</sub>(i=0, j=0)) cos(&phi;<sub>12</sub>(i, j))
+
+Y<sub>12</sub>(i,j) = r<sub>earth</sub> (&phi;<sub>12</sub>(i, j)-&phi;<sub>50</sub>(i=0, j=0))
 
 
 - ```mk_grid.py```: Generate the 1-D ```del(X/Y/R)File``` specified in ```data``` file PARAM04, i.e. the zonal/meridional/vertical grid spacing (in lon/lat/meters) between cell faces. This script also generate flat bottom bathymetry and constant initial conditions and forcing files in order to first generate the grid mesh of the configuration. These are stored in appropriate ```./mk_grid/``` directories and used by ```run_mk_grid.sh``` script (see below).
