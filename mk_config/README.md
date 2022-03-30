@@ -19,12 +19,13 @@ X<sub>12</sub>(i,j) = r<sub>earth</sub> (&theta;<sub>12</sub>(i, j)-&theta;<sub>
 
 Y<sub>12</sub>(i,j) = r<sub>earth</sub> (&phi;<sub>12</sub>(i, j)-&phi;<sub>50</sub>(i=0, j=0))
 
+with (X, Y) the grid in [m] and (&theta;, &phi;) the grid in lon/lat.
 
 - ```mk_grid.py```: Generate the 1-D ```del(X/Y/R)File``` specified in ```data``` file PARAM04, i.e. the zonal/meridional/vertical grid spacing (in lon/lat/meters) between cell faces. This script also generate flat bottom bathymetry and constant initial conditions and forcing files in order to first generate the grid mesh of the configuration. These are stored in appropriate ```./mk_grid/``` directories and used by ```run_mk_grid.sh``` script (see below).
 
 - ```mk_bathy.py```: Interpolate GEBCO (or other reference bathy file) onto the new configuration mesh. It first produces a *first guess* bathymetry which you can then adjust (by hand most of the time) to remove land points associated with lacks and other annoying stuff (I have removed several wet points near Florida tip for instance). 
 
-- ```mk_ics.py```: Interpolate 1/12 initial conditions onto the new, 1/50 downscaled model grid. The interpolation is first done in the horizontal, then in the vertical (the inverse produces larger errors near bathymetry). Following Joseph Schoonover's downscaling approach, land points on the parent, 1/12 model grid are reprated as the last wet grid point to the east for tracers in order to avoid interpolating with 0.0 in these regions. Similarly in the vertical the last wet points are repeated downward. Initial conditions are directly read from the pickup.XXXXXXXXXX.data files with appropriate variable (U, V, T, S, Eta) ordering.
+- ```mk_ics.py```: Interpolate 1/12 initial conditions onto the new, 1/50 downscaled model grid. The interpolation is first done in the horizontal, then in the vertical (the inverse produces larger errors near bathymetry). Following Joseph Schoonover's downscaling approach, land points on the parent, 1/12 model grid are reprated as the last wet grid point to the east for tracers in order to avoid interpolating with 0.0 in these regions. Similarly in the vertical the last wet points are repeated downward. Initial conditions are directly read from the pickup.XXXXXXXXXX.data files with appropriate variable (U, V, T, S, Eta) ordering. 
 
 - ```mk_obcs.py```: Interpolate 1/12 5-day averaged model output onto the open boundaries of the downscaled configuration. This is made for each member and each year. Note that two additional time records are needed in these forcing files for proper time interpolation at the begin and at the end of year. The two additional time records are placed at the end, where the last (second last) one corresponds to the last (first) time step of the preceding (following) year. [!!! Coded but not used for now (03/30/2022)!!!].
 
