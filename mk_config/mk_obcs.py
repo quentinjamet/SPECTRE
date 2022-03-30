@@ -96,7 +96,7 @@ if not os.path.isdir(tmpdir):
   os.makedirs( tmpdir )
 
 #-- Loop over variables and boundaries --
-for ivar in range(0, nvar):
+for ivar in range(3, nvar):
   if varN[ivar] == 'uE':
     flag_repz = False	#to repeat grid points downward for vert. interp
     mmeth = 'linear'	#interpolation method
@@ -236,7 +236,7 @@ for ivar in range(0, nvar):
       tmp_interp = p.map(interp_obcs, np.arange(nt+2))
     # reshape
     var50 = np.zeros([nt+2, nr50, nxy50])
-    for iir in range(nt+2):
+    for iit in range(nt+2):
       var50[iit, :, :] = tmp_interp[iit].reshape([nr50, nxy50])
     #-- save --
     print('Save ...')

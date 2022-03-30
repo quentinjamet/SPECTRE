@@ -62,9 +62,9 @@ f.close()
 
 exit()
 
-#----------------------------------------------------
-# Do some adjustments to fill up lacsand other stuffs
-#----------------------------------------------------
+#-----------------------------------------------------
+# Do some adjustments to fill up lacs and other stuffs
+#-----------------------------------------------------
 f = open(dir_out + 'topo50_1st_guess_GEBCO.bin', 'r')
 bathy50 = np.fromfile(f, '>f4').reshape([ny50, nx50])
 f.close()
@@ -89,11 +89,11 @@ mskNaN = bathy50 * 1.0
 mskNaN[np.where(mskNaN < 0)] = 1.0
 mskNaN[np.where(mskNaN == 0.0)] = np.nan
 
-fig1 = plt.figure()
+fig1 = plt.figure(figsize=(12,5))
 fig1.clf()
 ax1 = fig1.add_subplot(1,1,1,)
 cs1 = ax1.contourf(bathy50*mskNaN, 20, cmap='viridis_r')
-cbax1 = fig1.add_axes([0.88, 0.2, 0.02, 0.6])
+cbax1 = fig1.add_axes([0.92, 0.2, 0.01, 0.6])
 cb1 = fig1.colorbar(cs1, ax=ax1, orientation='vertical', cax=cbax1)
 cb1.set_label(r'Bathymetry [m]', fontsize='large')
 figN = 'bathy_chao50_GEBCO_update1'

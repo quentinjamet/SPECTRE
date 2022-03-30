@@ -62,7 +62,7 @@ def hz_interp(iii):
   tmp_interp = griddata(xy12, var12[iii, :, :].reshape([ny12*nx12]), (xx50, yy50), method=mmeth)
   return tmp_interp
 
-for ivar in range(nvar):
+for ivar in range(5, nvar):
   #ivar = 6
   #-- input file --
   if varN[ivar] == 'precip':
