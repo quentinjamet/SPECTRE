@@ -9,7 +9,7 @@ The following scripts are used to generate new, downscaled model grid, along wit
 
 line 126: ```val = [ parse1(s) for s in re.split(r'[, ] *',line) ]```
 
-The methode used to interpolate 1/12 field onto the new, 1/50 grid is to defined their repsective grid in [m] with co-localized origin. Analytically, this is done as follow: 
+The method used to interpolate 1/12 field onto the new, 1/50 grid is to defined their repsective grid in [m] with co-localized origin. Analytically, this is done as follow: 
 
 X<sub>50</sub>(i,j) = r<sub>earth</sub> (&theta;<sub>50</sub>(i, j)-&theta;<sub>50</sub>(i=0, j=0)) cos(&phi;<sub>50</sub>(i, j))
 
