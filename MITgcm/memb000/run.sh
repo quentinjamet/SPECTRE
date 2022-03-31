@@ -1,15 +1,16 @@
 #!/bin/bash
-### Job Name
+##-- Job Name
 #PBS -N mem000
-### Project code
+##-- Project code
 #PBS -A UFSU0023
 #PBS -l walltime=00:59:00
-#PBS -q economy
-### Select 24 nodes with 36 CPUs each for a total of 864 MPI processes
-### and require 128GB nodes (mem=109GB)
-#PBS -l select=23:ncpus=36:mpiprocs=36:mem=109GB
-###PBS -m abe
-###PBS -M login@univ-grenoble-alpes.fr
+#PBS -q premium
+##-- Select 23 nodes with 36 CPUs each for a total of 828 MPI processes
+##-- and require 128GB nodes (mem=109GB)
+##PBS -l select=23:ncpus=36:mpiprocs=36:mem=109GB
+#PBS -l select=41:ncpus=20:mpiprocs=20:mem=109GB
+#PBS -m abe
+#PBS -M quentin.jamet@univ-grenoble-alpes.fr
 
 # export the qsub command into the bash script
 export SUBMIT=/opt/pbs/default/bin/qsub
@@ -19,7 +20,7 @@ export SUBMIT=/opt/pbs/default/bin/qsub
 #     - Determine stop iteration for this period                              #
 #-----------------------------------------------------------------------------#
 varlist="confName confDir inDir runDir outDir scrDir monitor \
-         mem_nb period iit fit nit \
+         mem_nb period iit fit nit dt\
          pChkptFreq chkptFreq dumpFreq exe"
 source pc.vars
 
@@ -38,23 +39,20 @@ fi
 
 #-- set time parameters --
 sit=$(($iit+$nit))
-#iit0=`$scrDir/add0upto10c $iit`
-#sit0=`$scrDir/add0upto10c $sit`
 iit0=$( printf "010d" ${iit} )
 sit0=$( printf "010d" ${sit} )
 
 
 #-----------------------------------------------------------------------------#
 #     - Set data files for first iteration period                             #
-#	and make grid, OBCS, cheapAML and pickup links
+#	and link to the appropriate grid, OBCS, cheapAML and restart files    #
 #-----------------------------------------------------------------------------#
-. $scrDir/setdata $confDir/memb$mem_nb $iit $nit $pChkptFreq \
+. $scrDir/setdata $confDir/memb$mem_nb $iit $dt $nit $pChkptFreq \
                   $chkptFreq $dumpFreq
 
 . $scrDir/mklink $runDir2 $confName $confDir $inDir $period $mem_nb $exe \
                   $iit $iit0 $outDir $monitor
-#. $scrDir/mklink_mk_grid $runDir2 $confName $confDir $inDir $period $mem_nb $exe \
-#                  $iit $iit0 $outDir $monitor
+
 #-----------------------------------------------#
 #	 execute the model 			#
 #-----------------------------------------------#
@@ -66,8 +64,6 @@ echo "Beginning model execution..."         >> $confDir/memb${mem_nb}/$monitor
 mpiexec_mpt dplace -s 1 ./$exe
 echo "executable name:        "$exe         >> $confDir/memb${mem_nb}/$monitor
 
-#-- move grid --
-#. ${scrDir}/move_grid $runDir2 $outDir
 exit
 
 

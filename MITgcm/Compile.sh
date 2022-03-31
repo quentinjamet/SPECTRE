@@ -19,5 +19,5 @@ make depend
 make 
 cd ../
 
-cp -p ./build/mitgcmuv ./exe/mitgcmuv_test0
-cp -p ./build/Makefile ./exe/Makefile_test0
+cp -p ./build/mitgcmuv ./exe/mitgcmuv_test1
+cp -p ./build/Makefile ./exe/Makefile_test1

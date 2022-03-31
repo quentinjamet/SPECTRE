@@ -16,15 +16,16 @@ monitor=${11}
 #                             INPUT FILES	                              #
 #-----------------------------------------------------------------------------#
 #-- specific to each member --
-ln -s $confDir/memb$imem/data	$runDir2/data
+ln -s $confDir/memb$imem/data			$runDir2/data
+ln -s $confDir/memb$imem/data.diagnostics	$runDir2/data.diagnostics
 #-- common to all members --
 ln -s $confDir/input/data.kpp     	$runDir2/data.kpp
 ln -s $confDir/input/data.obcs     	$runDir2/data.obcs
 ln -s $confDir/input/data.pkg     	$runDir2/data.pkg
 ln -s $confDir/input/eedata     	$runDir2/eedata
-ln -s $confDir/exe/$exe			$runDir2/$exe
-ln -s $confDir/memb$imem/data.diagnostics		$runDir2/data.diagnostics
+ln -s $confDir/input/data.rbcs     	$runDir2/data.rbcs
 ln -s $confDir/input/data.cheapaml	$runDir2/data.cheapaml
+ln -s $confDir/exe/$exe			$runDir2/$exe
 
 #-----------------------------------------------------------------------------#
 #                             GRID		                              #
@@ -84,10 +85,11 @@ fi
 
 
 #-----------------------------------------------------------------------------#
-#                             pickup		                              #
+#                            Initial conditions and restarts                  #
 #-----------------------------------------------------------------------------#
 
 dir_ini=${inDir}/ini_cond_50
+#-- initial conditions --
 ln -s ${dir_ini}/ic${imem}/eta_ini50_ic${imem}.bin	$runDir2/eta_ini.bin
 ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin	$runDir2/s_ini.bin
 ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin	$runDir2/t_ini.bin
@@ -95,4 +97,12 @@ ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin	$runDir2/u_ini.bin
 ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin	$runDir2/v_ini.bin
 ln -s ${dir_ini}/ic${imem}/t2_ini50_ic${imem}.bin	$runDir2/t2_ini.bin
 ln -s ${dir_ini}/ic${imem}/q2_ini50_ic${imem}.bin	$runDir2/q2_ini.bin
+#-- restoring files --
+ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin        $runDir2/s_relax_ics.bin
+ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin        $runDir2/t_relax_ics.bin
+ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin        $runDir2/u_relax_ics.bin
+ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin        $runDir2/v_relax_ics.bin
+#-- restoring mask --
+ln -s ${dir_ini}/tsuv_relax_mask.bin			$runDir2/tsuv_rmask.bin
+
 

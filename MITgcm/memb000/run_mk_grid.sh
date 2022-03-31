@@ -15,8 +15,7 @@
 # export the qsub command into the bash script
 
 #-----------------------------------------------------------------------------#
-#     - Load PC parameters                                                    #
-#     - Determine stop iteration for this period                              #
+#     - Run time parameterers for input data, run dir and duration            #
 #-----------------------------------------------------------------------------#
 confDir=/glade/work/qjamet/Config/chao50
 inDir=/glade/p/univ/ufsu0011/data_in

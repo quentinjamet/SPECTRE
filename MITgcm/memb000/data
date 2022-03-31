@@ -44,14 +44,14 @@
 # Time stepping parameters 77760=180d, 79920=185d, 51840=120d, 54000=125d
  &PARM03
  nIter0=0,
- nTimeSteps=100,
+ nTimeSteps=1000,
  deltaT=5.0,
  abEps=0.01,
 # permanent pickup every 73-d
  pChkptFreq=0.,
 # rolling pickup every 5-d (used for restarts)
  chkptFreq=0.,
- monitorFreq=50.,
+ monitorFreq=5.,
  dumpFreq=50.,
  periodicExternalForcing=.TRUE.,
  useYearlyField=.TRUE.,

@@ -1,9 +1,9 @@
 #!sh Open-boundaries
  &OBCS_PARM01
-OB_Ieast=1150*-1,
-OB_Iwest=1150*1,
-OB_Jnorth=1800*-1,
-OB_Jsouth=1800*1,
+OB_Ieast=1000*-1,
+OB_Iwest=1000*1,
+OB_Jnorth=2050*-1,
+OB_Jsouth=2050*1,
 useOrlanskiEast=.FALSE.,
 useOrlanskiWest=.FALSE.,
 useOrlanskiNorth=.FALSE.,

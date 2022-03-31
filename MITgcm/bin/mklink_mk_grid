@@ -1,0 +1,88 @@
+#! /usr/bin/env bash
+
+runDir2=$1
+confDir=$2
+inDir=$3
+exe=$4
+iit=$5
+iit0=$6
+outDir=$7
+
+#-----------------------------------------------------------------------------#
+#                             INPUT FILES	                              #
+#-----------------------------------------------------------------------------#
+#-- specific to each member --
+ln -s $confDir/memb000/data	$runDir2/data
+#-- common to all members --
+ln -s $confDir/input/data.kpp     	$runDir2/data.kpp
+ln -s $confDir/input/data.obcs     	$runDir2/data.obcs
+ln -s $confDir/input/data.pkg     	$runDir2/data.pkg
+ln -s $confDir/input/eedata     	$runDir2/eedata
+ln -s $confDir/exe/$exe			$runDir2/$exe
+ln -s $confDir/memb000/data.diagnostics		$runDir2/data.diagnostics
+ln -s $confDir/input/data.cheapaml	$runDir2/data.cheapaml
+
+#-----------------------------------------------------------------------------#
+#                             GRID		                              #
+#-----------------------------------------------------------------------------#
+ln -s $inDir/grid_50/dx50.bin             $runDir2/dx50.bin
+ln -s $inDir/grid_50/dy50.bin             $runDir2/dy50.bin
+ln -s $inDir/grid_50/dz50.bin             $runDir2/dz50.bin
+ln -s $inDir/grid_50/topo50.bin           $runDir2/topo50.bin
+
+#-----------------------------------------------------------------------------#
+#                             OBCS		                              #
+#-----------------------------------------------------------------------------#
+
+dir_obcs=$inDir/bound_cond_50/mk_grid
+
+#-- south bdy --
+ln -s $dir_obcs/s_south_cst.bin		$runDir2/S_SOUTH.bin
+ln -s $dir_obcs/t_south_cst.bin		$runDir2/T_SOUTH.bin
+ln -s $dir_obcs/uE_south_cst.bin	$runDir2/uE_SOUTH.bin
+ln -s $dir_obcs/vN_south_cst.bin	$runDir2/vN_SOUTH.bin
+#-- north bdy --
+ln -s $dir_obcs/s_north_cst.bin		$runDir2/S_NORTH.bin
+ln -s $dir_obcs/t_north_cst.bin		$runDir2/T_NORTH.bin
+ln -s $dir_obcs/uE_north_cst.bin	$runDir2/uE_NORTH.bin
+ln -s $dir_obcs/vN_north_cst.bin	$runDir2/vN_NORTH.bin
+#-- east bdy --
+ln -s $dir_obcs/s_east_cst.bin		$runDir2/S_EAST.bin
+ln -s $dir_obcs/t_east_cst.bin		$runDir2/T_EAST.bin
+ln -s $dir_obcs/uE_east_cst.bin		$runDir2/uE_EAST.bin
+ln -s $dir_obcs/vN_east_cst.bin		$runDir2/vN_EAST.bin
+#-- west bdy --
+ln -s $dir_obcs/s_west_cst.bin		$runDir2/S_WEST.bin
+ln -s $dir_obcs/t_west_cst.bin		$runDir2/T_WEST.bin
+ln -s $dir_obcs/uE_west_cst.bin		$runDir2/uE_WEST.bin
+ln -s $dir_obcs/vN_west_cst.bin		$runDir2/vN_WEST.bin
+
+
+#-----------------------------------------------------------------------------#
+#                             cheapAML		                              #
+#-----------------------------------------------------------------------------#
+
+dir_atm=$inDir/atmo_cond_50/mk_grid
+ln -s $dir_atm/t2_cst.bin	$runDir2/t2.bin
+ln -s $dir_atm/q2_cst.bin	$runDir2/q2.bin
+ln -s $dir_atm/u10_cst.bin	$runDir2/u10.bin
+ln -s $dir_atm/v10_cst.bin	$runDir2/v10.bin
+ln -s $dir_atm/radlw_cst.bin	$runDir2/radlw.bin
+ln -s $dir_atm/radsw_cst.bin	$runDir2/radsw.bin
+ln -s $dir_atm/precip_cst.bin      $runDir2/precip.bin
+
+#- for initial conditions -
+ln -s ${dir_atm}/t2_cst.bin	$runDir2/t2_ini.bin
+ln -s ${dir_atm}/q2_cst.bin	$runDir2/q2_ini.bin
+
+#-----------------------------------------------------------------------------#
+#                             pickup		                              #
+#-----------------------------------------------------------------------------#
+
+dir_ini=${inDir}/ini_cond_50/mk_grid
+ln -s ${dir_ini}/eta_ini50_cst.bin	$runDir2/eta_ini.bin
+ln -s ${dir_ini}/s_ini50_cst.bin	$runDir2/s_ini.bin
+ln -s ${dir_ini}/t_ini50_cst.bin	$runDir2/t_ini.bin
+ln -s ${dir_ini}/u_ini50_cst.bin	$runDir2/u_ini.bin
+ln -s ${dir_ini}/v_ini50_cst.bin	$runDir2/v_ini.bin
+
