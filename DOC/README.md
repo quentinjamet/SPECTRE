@@ -43,6 +43,7 @@ Update the informations on the slurm batch job ```run.sh```:
 ```#PBS -M your@adress.com```
 
 Run the code (assuming forcing files have been produced previously, see ```./SPECTRE/mk_config/```):
+
 ```$ qsub run.sh```
 
 
