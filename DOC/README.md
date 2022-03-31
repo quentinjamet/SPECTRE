@@ -1,4 +1,4 @@
-The following steps will guide you to reproduce the current configuration on the NCAR-Cheyenne supercomputer.
+The following steps will guide you to reproduce the current configuration (many if which are specific to NCAR-Cheyenne supercomputer and should be updated if needed).
 
 To start, define a directory ```tmpDir``` and clone the project there (nothing heaving will be placed in here, this can be your /home/):
 
@@ -42,7 +42,7 @@ Update the informations on the slurm batch job ```run.sh```:
 
 ```#PBS -M your@adress.com```
 
-Run the code:
+Run the code (assuming forcing files have been produced previously, see ```./SPECTRE/mk_config/```):
 ```$ qsub run.sh```
 
 
