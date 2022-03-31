@@ -34,7 +34,7 @@ The following steps will guide you to reproduce the current configuration (many 
 
 - Create the run directory (on scratch dir):
 
-```mkdir -p /glade/scratch/your_login/tmp_running/chao50```
+```$ mkdir -p /glade/scratch/your_login/tmp_running/chao50```
 
 - Update the informations on the slurm batch job ```run.sh```:
 
@@ -51,15 +51,15 @@ The following steps will guide you to reproduce the current configuration (many 
 
 - submit a job
 
-```qsub your_job.sh```
+```$ qsub your_job.sh```
 
 - checking your job
 
-```qstat -u your_login```
+```$ qstat -u your_login```
 
 - Start an interaction session
 
-```qsub -I -l select=1:ncpus=1:mpiprocs=1:mem=109GB -l walltime=05:00:00 -q regular -A UFSU0023```
+```$ qsub -I -l select=1:ncpus=1:mpiprocs=1:mem=109GB -l walltime=05:00:00 -q regular -A UFSU0023```
 
 - The script ```$tmpDir/MITgcm/bin/mk_memb_XXX.sh``` takes care of generating additional ensemble members based on a reference (```memb000``` in the example)
 
