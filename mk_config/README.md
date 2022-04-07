@@ -35,7 +35,7 @@ with (X, Y) the grid in [m] and (&theta;, &phi;) the grid in lon/lat.
 
 ## Steps to make a new configuration
 
-- First, make the grid with desired ```dx```, ```dy```, and ```dz``` grid parameters. The script ```mk_grid.py``` will do that for you, along with generating flat bottom bathymetry, constant initial conditions, atmospheric forcing and opend boundary conditions in order to generate the model mesh at first. Link this flat bottom bathymetry file (in the ```/glade/p/univ/ufsu0011/data_in/grid_50/``` directory in our case):
+- First, make the grid with desired ```dx```, ```dy```, and ```dz``` grid parameters. The script ```mk_grid.py``` will do that for you, along with generating flat bottom bathymetry, constant initial conditions, atmospheric forcing and opend boundary conditions in order to generate the model mesh at first. Link this flat bottom bathymetry file (in the ```/glade/p/univ/ufsu0011/data_in/grid_50/``` directory in our case) to ```topo50.bin```, the name used in ```data``` as topo file:
 
 ```$ ln -s topo50_flat_bottom.bin topo50.bin```
 

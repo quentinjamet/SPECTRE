@@ -12,7 +12,7 @@ These 1/50 ensemble simulations are based on the earlier 1/12, 48-member ensembl
 
 These simulations are based on [MITgcm ](https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/96JC02775).
 
-Indications to help reproducing these simulations are provided in ```./SPECTRE/DOC/```.
+Indications to help reproducing these simulations are provided in ```./DOC/```.
 
 ## Initial conditions, open boundaries and atmospheric forcing
 Example of scripts to generate the model grid, the bathymetry, the surface and open boundary forcing as well as initial conditions are available in ```./mk_config/```.
