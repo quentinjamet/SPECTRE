@@ -55,4 +55,4 @@ should be adjusted to fit the ```nPx*nPy``` in ```./codr/SIZE.h```.
 
 ```$ qsub -I -l select=1:ncpus=36:mpiprocs=36:mem=109GB -l walltime=01:00:00 -q regular -A UFSU0023```
 
-- And finally, go back to ```${your_pref_dir}/SPECTRE/MITgcm/memb000``` and launch a pre-production reun using ```run.sh```. This scripts call few others (in ```./bin```) to make appropriate links and move model outputs at the end of a run before re-launching itself.
+- And finally, go back to ```${your_pref_dir}/SPECTRE/MITgcm/memb000``` and launch a pre-production run using ```run.sh```. This script call few others (in ```./MITgcm/bin/```) to make appropriate links and move model outputs at the end of a run before re-launching itself.

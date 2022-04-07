@@ -106,7 +106,7 @@ mv $confDir/memb${mem_nb}/$monitor ${outDir}/memb${mem_nb}/run${period}/$monitor
 #-----------------------------------------------------------------------------#
 #-- back to config directory --
 cd $confDir/memb${mem_nb}
-rm -rf orar_mem${mem_nb}.*
+rm -rf mem${mem_nb}.*
 
 source pc.vars
 iit=$sit
