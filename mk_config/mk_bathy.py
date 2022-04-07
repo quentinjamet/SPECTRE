@@ -1,12 +1,12 @@
 import numpy as np
 import MITgcmutils as mit
-#import xmitgcm as xmit
 import matplotlib.pyplot as plt
 import xarray as xr
 from scipy.interpolate import griddata
 
+print("-- Make the bathymetry --")
 
-plt.ion()
+
 
 #-- directories --
 dir_grd = '/glade/p/univ/ufsu0011/initial_data/grid/'
@@ -65,6 +65,7 @@ exit()
 #-----------------------------------------------------
 # Do some adjustments to fill up lacs and other stuffs
 #-----------------------------------------------------
+
 f = open(dir_out + 'topo50_1st_guess_GEBCO.bin', 'r')
 bathy50 = np.fromfile(f, '>f4').reshape([ny50, nx50])
 f.close()
@@ -85,6 +86,7 @@ f.close()
 exit()
 
 #-- plot --
+plt.ion()
 mskNaN = bathy50 * 1.0
 mskNaN[np.where(mskNaN < 0)] = 1.0
 mskNaN[np.where(mskNaN == 0.0)] = np.nan

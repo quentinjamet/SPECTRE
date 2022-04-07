@@ -1,10 +1,12 @@
 import numpy as np
+import xarray as xr
 
 #-- directories --
 dir_out = '/glade/p/univ/ufsu0011/data_in/grid_50/'
+dir_grd = '/glade/p/univ/ufsu0011/initial_data/grid/'
 
 #-- original mesh parameters --
-[nr, ny, nx] = [75, 1000,2050]
+[nr, ny, nx] = [75, 1000,2052]
 delxy = 1/50
 
 #-----------------------------------------
@@ -47,7 +49,7 @@ f.close()
 H0 = -6000      #[m]
 bathy = H0 * np.ones([ny, nx])
 #- save -
-f = open(dir_out + 'topo50.bin', 'wb')
+f = open(dir_out + 'topo50_flat_bottom.bin', 'wb')
 bathy.reshape([ny*nx]).astype('>f4').tofile(f)
 f.close()
 

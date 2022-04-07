@@ -12,21 +12,23 @@ from multiprocessing import Pool
 #-- directories --
 dir_grd12 = '/glade/p/univ/ufsu0011/runs/gridMIT_update1/'
 dir_grd50 = '/glade/p/univ/ufsu0011/runs/chao50/gridMIT/'
-dir_ic12  = '/glade/p/univ/ufsu0011/data_in/ini_cond_12/ensemble_ic'
+#dir_ic12  = '/glade/p/univ/ufsu0011/data_in/ini_cond_12/ensemble_ic'
+dir_ic12  = '/glade/p/univ/ufsu0011/runs/orar/memb00/run2002'
 dir_ic50  = '/glade/p/univ/ufsu0011/data_in/ini_cond_50'
 
 dir_fig = '/tank/chaocean/scripts_py/chao50/'
 #-- some parameters --
-iiter = 946080
+#iiter = 946080
+iiter = 7095600
 
 varN = ['u', 'v', 't', 's']
 nvar = len(varN)
 # varNb should match pickup fil ordering
 # 'Uvel    ' 'Vvel    ' 'Theta   ' 'Salt    ' 'GuNm1   ' 'GvNm1   ' 'EtaN    ' 'dEtaHdt ' 'EtaH    '
 varNb = [0, 1, 2, 3]
-
+# with an interative session: qsub -I -l select=1:ncpus=36:mpiprocs=36
 nproc = 36      #number of processors used for parallelization
-
+mmeth = 'cubic'
 
 #------------------------------------------------------------------
 #	Make Initial conditions from our previous 1/12 runs
@@ -60,12 +62,13 @@ tmpdir = str('%s/ic%03i' % (dir_ic50, iic))
 if not os.path.isdir(tmpdir):
   os.mkdir( tmpdir )
 #- from pickups -
-tmpocn = mit.rdmds( str('%s/ic%02i/pickup.%010i' % (dir_ic12, iic, iiter)) )
+#tmpocn = mit.rdmds( str('%s/ic%02i/pickup.%010i' % (dir_ic12, iic, iiter)) )
+tmpocn = mit.rdmds( str('%s/ocn/pickup.%010i' % (dir_ic12, iiter)) )
 
 #-- define horizontal interpolation --
 def hz_interp(kkkk):
   print("Interpolating %s, level k=%03i" % (varN[ivar], kkkk) )
-  tmp_interp = griddata(xy12, var12[kkkk, :, :].reshape([ny12*nx12]), (xx50, yy50), method='linear')
+  tmp_interp = griddata(xy12, var12[kkkk, :, :].reshape([ny12*nx12]), (xx50, yy50), method=mmeth)
   return tmp_interp
 
 #-- define vertical interpolation --
@@ -123,8 +126,6 @@ for ivar in range(nvar):
   var12 = tmpocn[varNb[ivar]*nr12:(varNb[ivar]+1)*nr12, :, :]
   #- make some adjustments near land points (FOR TRACER ONLY) -
   if varN[ivar] == 't' or varN[ivar] == 's':
-    #msk = hC12*1.0
-    #msk[np.where(msk) != 0.0 ] = 1.0
     for kk in range(nr12):
       for jj in range(ny12):
         for ii in range(nx12-1, -1, -1):
@@ -170,7 +171,7 @@ for ivar in range(nvar):
 #-----------------------------------
 #-- eta --
 print('-- interpolate eta --')
-eta12 = tmpocn[nr12*6, :, :] * hC12[0, :, :]
+eta12 = tmpocn[nr12*6, :, :]
 #- hz interp -
 eta50 = griddata(xy12, eta12.reshape([ny12*nx12]), (xx50, yy50), method='linear')
 #- save -
@@ -179,7 +180,7 @@ eta50.reshape([ny50*nx50]).astype('>f4').tofile(f)
 f.close()
 
 #-- cheapaml initial conditions --
-tmpcheap = mit.rdmds( str('%s/ic%02i/pickup_cheapaml.%010i' % (dir_ic12, iic, iiter)) )
+tmpcheap = mit.rdmds( str('%s/cheapaml/pickup_cheapaml.%010i' % (dir_ic12, iiter)) )
 #-- atmospheric t2 --
 print('-- interpolate t2 (cheapaml) --')
 t2_12 = tmpcheap[0, :, :]
@@ -199,10 +200,10 @@ f = open( str("%s/q2_ini50_ic%03i.bin" %(tmpdir, iic) ), 'wb')
 q2_50.reshape([ny50*nx50]).astype('>f4').tofile(f)
 f.close()
 
-
+exit()
 
 #-----------------------------------------
-# Restoring maks
+# Restoring mask
 #-----------------------------------------
 print('-- Make RBCS masks --')
 rmask = np.ones([nr50, ny50, nx50])
@@ -214,108 +215,5 @@ f.close()
 
 
 exit()
-
-
-
-#-- temperature --
-ttt12 = np.zeros([nr12+2, ny12, nx12])
-ttt12[1:-1, :, :] = tmpocn[nr12*2:nr12*3, :, :] * hC12
-ttt12[0, :, :] = ttt12[1, :, :]
-ttt12[-1, :, :] = ttt12[-2, :, :]
-ttt12_z75 = np.zeros([nr50, ny12, nx12])
-#- verti interpolation -
-# find last wet point and add repeat it downward for constant interpolation
-for jjj in range(ny12):
-  for iii in range(nx12):
-    #- find last wet point and repeat it downward for constant interpolation -
-    tmpk = np.where(ttt12[:, jjj, iii] == 0.0 )[0]
-    if tmpk.size > 0:
-     if (tmpk[0] > 0 and tmpk[0] < (nr12+1) ):
-      ttt12[tmpk[0]:, jjj, iii] = ttt12[tmpk[0]-1, jjj, iii]
-    #- vertical interpolation -
-    f = interp1d(zzz12, ttt12[:, jjj, iii])
-    ttt12_z75[:, jjj, iii] = f(rC50[:, 0, 0])
-#- hz interp -
-ttt50 = np.zeros([nr50, ny50, nx50])
-for kkk in range(nr50):
-  print('level: %03i' % kkk)
-  ttt50[kkk, :, :] = griddata(xy12, ttt12_z75[kkk, :, :].reshape([ny12*nx12]), (xC50, yC50), method='linear')
-#- save -
-f = open( str("%s/t_ini50_ic%03i.bin" %(tmpdir, iic) ), 'wb')
-ttt50.reshape([nr50*ny50*nx50]).astype('>f4').tofile(f)
-f.close()
-
-#-- salinity --
-sss12 = np.zeros([nr12+2, ny12, nx12])
-sss12[1:-1, :, :] = tmpocn[nr12*3:nr12*4, :, :] * hC12
-sss12[0, :, :] = sss12[1, :, :]
-sss12[-1, :, :] = sss12[-2, :, :]
-sss12_z75 = np.zeros([nr50, ny12, nx12])
-#- verti interpolation -
-# find last wet point and add repeat it downward for constant interpolation
-for jjj in range(ny12):
-  for iii in range(nx12):
-    #- find last wet point and repeat it downward for constant interpolation -
-    tmpk = np.where(sss12[:, jjj, iii] == 0.0 )[0]
-    if tmpk.size > 0:
-     if (tmpk[0] > 0 and tmpk[0] < (nr12+1) ):
-      sss12[tmpk[0]:, jjj, iii] = sss12[tmpk[0]-1, jjj, iii]
-    #- vertical interpolation -
-    f = interp1d(zzz12, sss12[:, jjj, iii])
-    sss12_z75[:, jjj, iii] = f(rC50[:, 0, 0])
-#- hz interp -
-sss50 = np.zeros([nr50, ny50, nx50])
-for kkk in range(nr50):
-  print('level: %03i' % kkk)
-  sss50[kkk, :, :] = griddata(xy12, sss12_z75[kkk, :, :].reshape([ny12*nx12]), (xC50, yC50), method='linear')
-#- save -
-f = open( str("%s/s_ini50_ic%03i.bin" %(tmpdir, iic) ), 'wb')
-sss50.reshape([nr50*ny50*nx50]).astype('>f4').tofile(f)
-f.close()
-
-#-- uvel --
-uuu12 = np.zeros([nr12+2, ny12, nx12])
-uuu12[1:-1, :, :] = tmpocn[:nr12, :, :] * hW12
-uuu12[0, :, :] = uuu12[1, :, :]
-uuu12[-1, :, :] = uuu12[-2, :, :]
-var12_z75 = np.zeros([nr50, ny12, nx12])
-#- verti interpolation -
-for jjj in range(ny12):
-  for iii in range(nx12):
-    f = interp1d(zzz12, uuu12[:, jjj, iii])
-    var12_z75[:, jjj, iii] = f(rC50[:, 0, 0])
-#- hz interp (with parallelization) -
-if __name__ == '__main__':
-  p = Pool(nproc)
-  tmp_var50 = p.map(hz_interp, np.arange(nr50))
-#- reshape -
-uuu50 = np.zeros([nr50, ny50, nx50])
-for kkk in range(nr50):
-  uuu50[kkk, :, :] = tmp_var50[kkk]
-#- save -
-f = open( str("%s/u_ini50_ic%03i.bin" %(tmpdir, iic) ), 'wb')
-uuu50.reshape([nr50*ny50*nx50]).astype('>f4').tofile(f)
-f.close()
-
-#-- vvel --
-vvv12 = np.zeros([nr12+2, ny12, nx12])
-vvv12[1:-1, :, :] = tmpocn[nr12:nr12*2, :, :] * hS12
-vvv12[0, :, :] = vvv12[1, :, :]
-vvv12[-1, :, :] = vvv12[-2, :, :]
-var12_z75 = np.zeros([nr50, ny12, nx12])
-#- verti interpolation -
-for jjj in range(ny12):
-  for iii in range(nx12):
-    f = interp1d(zzz12, vvv12[:, jjj, iii])
-    var12_z75[:, jjj, iii] = f(rC50[:, 0, 0])
-#- hz interp -
-vvv50 = np.zeros([nr50, ny50, nx50])
-for kkk in range(nr50):
-  print('level: %03i' % kkk)
-  vvv50[kkk, :, :] = griddata(xy12, var12_z75[kkk, :, :].reshape([ny12*nx12]), (xC50, yC50), method='cubic')
-#- save -
-f = open( str("%s/v_ini50_ic%03i.bin" %(tmpdir, iic) ), 'wb')
-vvv50.reshape([nr50*ny50*nx50]).astype('>f4').tofile(f)
-f.close()
 
 

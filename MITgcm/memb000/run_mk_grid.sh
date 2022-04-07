@@ -5,12 +5,11 @@
 #PBS -A UFSU0023
 #PBS -l walltime=00:09:00
 #PBS -q premium
-##-- Select 24 nodes with 36 CPUs each for a total of 864 MPI processes
+##-- Select 20 nodes with 36 CPUs each for a total of 720 MPI processes
 ##-- and require 128GB nodes (mem=109GB)
-##PBS -l select=23:ncpus=36:mpiprocs=36:mem=109GB
-#PBS -l select=41:ncpus=20:mpiprocs=20:mem=109GB
+#PBS -l select=20:ncpus=36:mpiprocs=36:mem=109GB
 #PBS -m abe
-#PBS -M quentin.jamet@univ-grenoble-alpes.fr
+#PBS -M your@adress
 
 # export the qsub command into the bash script
 

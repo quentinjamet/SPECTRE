@@ -12,7 +12,7 @@ from multiprocessing import Pool
 #-- directories --
 dir_grd12 = '/glade/p/univ/ufsu0011/runs/gridMIT_update1/'
 dir_grd50 = '/glade/p/univ/ufsu0011/runs/chao50/gridMIT/'
-dir_in  = '/glade/p/univ/ufsu0011/runs/orar'
+dir_in  = '/glade/p/univ/ufsu0011/runs/orar/memb00'
 dir_out = '/glade/p/univ/ufsu0011/data_in/bound_cond_50'
 
 #-- some parameters --
@@ -59,7 +59,7 @@ nnbdy = len(bbdy)
 #-----------------------------------------------------
 
 def interp_obcs(tttt):
-  print("-- tt=%02i || Interpolate %s at bdy %s --" % (tttt, varN[ivar], bbdy[ibdy]))
+  #print("-- tt=%02i || Interpolate %s at bdy %s --" % (tttt, varN[ivar], bbdy[ibdy]))
   tmpvarin = var12[tttt, :, :, :].reshape([nr12, ny2*nx2])
   #- hz interp -
   tmpvar = np.zeros([nr12+2, nxy50])
@@ -86,11 +86,10 @@ def interp_obcs(tttt):
 #	Make Boundary conditions from our previous 1/12 runs
 #------------------------------------------------------------------
 
-iic = 000
-iper = 1963
+iper = 2003
 offset = int((iper-1958)*spy/dt)
 iters = np.arange(d_iter, (nDump+1)*d_iter, d_iter, dtype='int') + offset
-tmpdir = str('%s/%04i/ic%03i' % (dir_out, iper, iic))
+tmpdir = str('%s/%04i' % (dir_out, iper))
 if not os.path.isdir(tmpdir):
   os.makedirs( tmpdir )
 
@@ -98,7 +97,7 @@ if not os.path.isdir(tmpdir):
 for ivar in range(nvar):
   if varN[ivar] == 'uE':
     flag_repz = False	#to repeat grid points downward for vert. interp
-    mmeth = 'linear'	#interpolation method
+    mmeth = 'cubic'	#interpolation method
     # 1/50
     x50deg = mit.rdmds(dir_grd50 + 'XG')
     y50deg = mit.rdmds(dir_grd50 + 'YC')
@@ -108,7 +107,7 @@ for ivar in range(nvar):
     y12deg = mit.rdmds(dir_grd12 + 'YC')
   elif varN[ivar] == 'vN':
     flag_repz = False	#to repeat grid points downward for vert. interp
-    mmeth = 'linear'	#interpolation method
+    mmeth = 'cubic'	#interpolation method
     # 1/50
     x50deg = mit.rdmds(dir_grd50 + 'XC')
     y50deg = mit.rdmds(dir_grd50 + 'YG')
@@ -205,17 +204,17 @@ for ivar in range(nvar):
     #-- horizontal interpolation --
     print('Loading 1/12 field ...')
     var12 = np.zeros([nt+2, nr12, ny2, nx2])
-    var12[:-2, :, :, :] =  mit.rdmds( str("%s/memb%02i/run%04i/ocn/diag_ocnTave" \
-            % (dir_in, iic, iper) ), \
+    var12[:-2, :, :, :] =  mit.rdmds( str("%s/run%04i/ocn/diag_ocnTave" \
+            % (dir_in, iper) ), \
             itrs=list(iters), rec=varOrder[ivar], region=[iiw, iie, jjs, jjn], usememmap=True )
     #-- these lignes should be uncommented at some point to add the first (last) time record of 
     #   previous (next) year for a proper interpolation 
     #   (currently done in a 'normal year fashion)'--
-    #var12[-1, :, :, :] =  mit.rdmds( str("%s/memb%02i/run%04i/ocn/diag_ocnTave" \
-    #        % (dir_in, iic, (iper-1)) ), \
+    #var12[-1, :, :, :] =  mit.rdmds( str("%s/run%04i/ocn/diag_ocnTave" \
+    #        % (dir_in, (iper-1)) ), \
     #        itrs=iters[0]-d_iter, rec=varOrder[ivar], region=[iiw, iie, jjs, jjn], usememmap=True )
-    #var12[-2, :, :, :] =  mit.rdmds( str("%s/memb%02i/run%04i/ocn/diag_ocnTave" \
-    #        % (dir_in, iic, (iper+1)) ), \
+    #var12[-2, :, :, :] =  mit.rdmds( str("%s/run%04i/ocn/diag_ocnTave" \
+    #        % (dir_in, (iper+1)) ), \
     #        itrs=iters[-1]+d_iter, rec=varOrder[ivar], region=[iiw, iie, jjs, jjn], usememmap=True )
     var12[-1, :, :, :] = var12[0, :, :, :]
     var12[-2, :, :, :] = var12[-3, :, :, :]
@@ -239,8 +238,8 @@ for ivar in range(nvar):
       var50[iit, :, :] = tmp_interp[iit].reshape([nr50, nxy50])
     #-- save --
     print('Save ...')
-    f = open( str("%s/%s_%s_%04i_ic%03i.bin" % \
-        (tmpdir, varN[ivar], bbdy[ibdy]  ,iper, iic) ), 'wb')
+    f = open( str("%s/%s_%s_%04i.bin" % \
+        (tmpdir, varN[ivar], bbdy[ibdy]  ,iper) ), 'wb')
     var50.reshape([(nt+2)*nr50*nxy50]).astype('>f4').tofile(f)
     f.close()
     #

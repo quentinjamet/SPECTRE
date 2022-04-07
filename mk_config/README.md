@@ -39,9 +39,15 @@ with (X, Y) the grid in [m] and (&theta;, &phi;) the grid in lon/lat.
 
 ```$ ln -s topo50_flat_bottom.bin topo50.bin```
 
-- Go to ```${your_pref_dir}/SPECTRE/MITgcm/```, update ```./code/SIZE.h``` with the appropriate grid points (and tilling!), then compile the with ```Compile.sh```. Also update ```OB_I/J*``` parameters in PARM01 of ```./input/data.obcs```, as well as the ```(xg/yg)Origin``` in ```./memb00/data``` PARAM04 if needed (note: these are eastern/southern grid cell face coordinates of the lower left grid point of the domain). Then, run for a few (3) time steps to produce the desired grid using ```./memb000/run_mk_grid.sh```. 
+- Go to ```${your_pref_dir}/SPECTRE/MITgcm/```, update ```./code/SIZE.h``` with the appropriate grid points (and tilling!), then compile the with ```Compile.sh```. This procude an executable which is copied in ```./exe/``` directory along with the associate Makefile. 
 
-- Make the bathymetry with ```mk_bathy.py```. Depending on the domain, you may need to fill in some grid points by hand to avoid issues. By experience, this may also arise after a decent number of iterations in shallow water area due to cheapaml. Update the ```topo50.bin``` link with this new bathymetry.
+- Update run time parameters ```OB_I/J*``` in PARM01 of ```./input/data.obcs```. You may also want to change the ```(xg/yg)Origin``` in ```./memb00/data``` PARAM04 (note: these are eastern/southern grid cell face coordinates of the lower left grid point of the domain). If you changes the name of the executable in the previous step, you need to update it in ```./memb000/pc.vars``` and ```./memb000/run_mk_grid.sh```.
+
+- Run for a few (3) time steps to produce the desired grid using ```./memb000/run_mk_grid.sh```. The CPU request 
+```#PBS -l select=20:ncpus=36:mpiprocs=36:mem=109GB```
+should be adjusted to fit the ```nPx*nPy``` in ```./codr/SIZE.h```.
+
+- Make the bathymetry with ```mk_bathy.py```. Depending on the domain, you may need to fill in some grid points by hand to avoid issues. (By experience, this may also arise after a decent number of iterations in shallow water area due to cheapaml). Account for this new bathymetry by updating the link ```topo50.bin``` made in the previous step.
 
 - Re-run ```./memb000/run_mk_grid.sh``` with this new bathymetry (don't forget to update it with ```$ ln -s topo50_update1.bin topo50.bin```).
 
@@ -49,4 +55,4 @@ with (X, Y) the grid in [m] and (&theta;, &phi;) the grid in lon/lat.
 
 ```$ qsub -I -l select=1:ncpus=36:mpiprocs=36:mem=109GB -l walltime=01:00:00 -q regular -A UFSU0023```
 
-This will launch an interactive session with 1 node, 36 processors of large (109GB) memory for 1 hour, charging the UFSU0023 project ressources. Then, activate your python environement in order to run the scripte (In my case I do: ```module load ncarenv conda ; conda activate my_env0```).
+- And finally, go back to ```${your_pref_dir}/SPECTRE/MITgcm/memb000``` and launch a pre-production reun using ```run.sh```. This scripts call few others (in ```./bin```) to make appropriate links and move model outputs at the end of a run before re-launching itself.

@@ -19,21 +19,21 @@ monitor=${11}
 ln -s $confDir/memb$imem/data			$runDir2/data
 ln -s $confDir/memb$imem/data.diagnostics	$runDir2/data.diagnostics
 #-- common to all members --
-ln -s $confDir/input/data.kpp     	$runDir2/data.kpp
-ln -s $confDir/input/data.obcs     	$runDir2/data.obcs
-ln -s $confDir/input/data.pkg     	$runDir2/data.pkg
-ln -s $confDir/input/eedata     	$runDir2/eedata
-ln -s $confDir/input/data.rbcs     	$runDir2/data.rbcs
-ln -s $confDir/input/data.cheapaml	$runDir2/data.cheapaml
-ln -s $confDir/exe/$exe			$runDir2/$exe
+ln -s $confDir/input/data.kpp     		$runDir2/data.kpp
+ln -s $confDir/input/data.obcs     		$runDir2/data.obcs
+ln -s $confDir/input/data.pkg     		$runDir2/data.pkg
+ln -s $confDir/input/eedata     		$runDir2/eedata
+ln -s $confDir/input/data.rbcs     		$runDir2/data.rbcs
+ln -s $confDir/input/data.cheapaml		$runDir2/data.cheapaml
+ln -s $confDir/exe/$exe				$runDir2/$exe
 
 #-----------------------------------------------------------------------------#
 #                             GRID		                              #
 #-----------------------------------------------------------------------------#
-ln -s $inDir/grid_50/dx50.bin             $runDir2/dx50.bin
-ln -s $inDir/grid_50/dy50.bin             $runDir2/dy50.bin
-ln -s $inDir/grid_50/dz50.bin             $runDir2/dz50.bin
-ln -s $inDir/grid_50/topo50.bin           $runDir2/topo50.bin
+ln -s $inDir/grid_50/dx50.bin			$runDir2/dx50.bin
+ln -s $inDir/grid_50/dy50.bin			$runDir2/dy50.bin
+ln -s $inDir/grid_50/dz50.bin			$runDir2/dz50.bin
+ln -s $inDir/grid_50/topo50.bin			$runDir2/topo50.bin
 
 #-----------------------------------------------------------------------------#
 #                             OBCS		                              #
@@ -42,25 +42,25 @@ ln -s $inDir/grid_50/topo50.bin           $runDir2/topo50.bin
 dir_obcs=$inDir/bound_cond_50
 
 #-- south bdy --
-ln -s $dir_obcs/$yr/ic$imem/s_south_${yr}_ic${imem}.bin		$runDir2/S_SOUTH.bin
-ln -s $dir_obcs/$yr/ic$imem/t_south_${yr}_ic${imem}.bin		$runDir2/T_SOUTH.bin
-ln -s $dir_obcs/$yr/ic$imem/uE_south_${yr}_ic${imem}.bin	$runDir2/uE_SOUTH.bin
-ln -s $dir_obcs/$yr/ic$imem/vN_south_${yr}_ic${imem}.bin	$runDir2/vN_SOUTH.bin
+ln -s $dir_obcs/$yr/s_south_${yr}.bin		$runDir2/S_SOUTH.bin
+ln -s $dir_obcs/$yr/t_south_${yr}.bin		$runDir2/T_SOUTH.bin
+ln -s $dir_obcs/$yr/uE_south_${yr}.bin		$runDir2/uE_SOUTH.bin
+ln -s $dir_obcs/$yr/vN_south_${yr}.bin		$runDir2/vN_SOUTH.bin
 #-- north bdy --
-ln -s $dir_obcs/$yr/ic$imem/s_north_${yr}_ic${imem}.bin		$runDir2/S_NORTH.bin
-ln -s $dir_obcs/$yr/ic$imem/t_north_${yr}_ic${imem}.bin		$runDir2/T_NORTH.bin
-ln -s $dir_obcs/$yr/ic$imem/uE_north_${yr}_ic${imem}.bin	$runDir2/uE_NORTH.bin
-ln -s $dir_obcs/$yr/ic$imem/vN_north_${yr}_ic${imem}.bin	$runDir2/vN_NORTH.bin
+ln -s $dir_obcs/$yr/s_north_${yr}.bin		$runDir2/S_NORTH.bin
+ln -s $dir_obcs/$yr/t_north_${yr}.bin		$runDir2/T_NORTH.bin
+ln -s $dir_obcs/$yr/uE_north_${yr}.bin		$runDir2/uE_NORTH.bin
+ln -s $dir_obcs/$yr/vN_north_${yr}.bin		$runDir2/vN_NORTH.bin
 #-- east bdy --
-ln -s $dir_obcs/$yr/ic$imem/s_east_${yr}_ic${imem}.bin	$runDir2/S_EAST.bin
-ln -s $dir_obcs/$yr/ic$imem/t_east_${yr}_ic${imem}.bin	$runDir2/T_EAST.bin
-ln -s $dir_obcs/$yr/ic$imem/uE_east_${yr}_ic${imem}.bin	$runDir2/uE_EAST.bin
-ln -s $dir_obcs/$yr/ic$imem/vN_east_${yr}_ic${imem}.bin	$runDir2/vN_EAST.bin
+ln -s $dir_obcs/$yr/s_east_${yr}.bin		$runDir2/S_EAST.bin
+ln -s $dir_obcs/$yr/t_east_${yr}.bin		$runDir2/T_EAST.bin
+ln -s $dir_obcs/$yr/uE_east_${yr}.bin		$runDir2/uE_EAST.bin
+ln -s $dir_obcs/$yr/vN_east_${yr}.bin		$runDir2/vN_EAST.bin
 #-- west bdy --
-ln -s $dir_obcs/$yr/ic$imem/s_west_${yr}_ic${imem}.bin	$runDir2/S_WEST.bin
-ln -s $dir_obcs/$yr/ic$imem/t_west_${yr}_ic${imem}.bin	$runDir2/T_WEST.bin
-ln -s $dir_obcs/$yr/ic$imem/uE_west_${yr}_ic${imem}.bin	$runDir2/uE_WEST.bin
-ln -s $dir_obcs/$yr/ic$imem/vN_west_${yr}_ic${imem}.bin	$runDir2/vN_WEST.bin
+ln -s $dir_obcs/$yr/s_west_${yr}.bin		$runDir2/S_WEST.bin
+ln -s $dir_obcs/$yr/t_west_${yr}.bin		$runDir2/T_WEST.bin
+ln -s $dir_obcs/$yr/uE_west_${yr}.bin		$runDir2/uE_WEST.bin
+ln -s $dir_obcs/$yr/vN_west_${yr}.bin		$runDir2/vN_WEST.bin
 
 
 #-----------------------------------------------------------------------------#
@@ -98,11 +98,11 @@ ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin	$runDir2/v_ini.bin
 ln -s ${dir_ini}/ic${imem}/t2_ini50_ic${imem}.bin	$runDir2/t2_ini.bin
 ln -s ${dir_ini}/ic${imem}/q2_ini50_ic${imem}.bin	$runDir2/q2_ini.bin
 #-- restoring files --
-ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin        $runDir2/s_relax_ics.bin
-ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin        $runDir2/t_relax_ics.bin
-ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin        $runDir2/u_relax_ics.bin
-ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin        $runDir2/v_relax_ics.bin
+#ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin        $runDir2/s_relax_ics.bin
+#ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin        $runDir2/t_relax_ics.bin
+#ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin        $runDir2/u_relax_ics.bin
+#ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin        $runDir2/v_relax_ics.bin
 #-- restoring mask --
-ln -s ${dir_ini}/tsuv_relax_mask.bin			$runDir2/tsuv_rmask.bin
+#ln -s ${dir_ini}/tsuv_relax_mask.bin			$runDir2/tsuv_rmask.bin
 
 

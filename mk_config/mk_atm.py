@@ -15,7 +15,7 @@ dir_grd50 = '/glade/p/univ/ufsu0011/runs/chao50/gridMIT/'
 dir_in  = '/glade/p/univ/ufsu0011/data_in/atmo_cond_12'
 dir_out = '/glade/p/univ/ufsu0011/data_in/atmo_cond_50'
 
-iper = 1963
+iper = 2003
 tmpdir = str('%s/%04i' % (dir_out, iper))
 if not os.path.isdir(tmpdir):
   os.makedirs( tmpdir )
@@ -62,10 +62,10 @@ def hz_interp(iii):
   tmp_interp = griddata(xy12, var12[iii, :, :].reshape([ny12*nx12]), (xx50, yy50), method=mmeth)
   return tmp_interp
 
-for ivar in range(5, nvar):
+for ivar in range(nvar):
   #ivar = 6
   #-- input file --
-  if varN[ivar] == 'precip':
+  if varN[ivar] == 'precip' and iper <= 1976:
     f = open( str("%s/precip_climExtd.box" % (dir_in) ), 'r')  
     var12 = np.fromfile(f, '>f4').reshape([nt+2, ny12, nx12])
     f.close()
@@ -87,12 +87,12 @@ for ivar in range(5, nvar):
   for iii in range(nt+2):
     var50[iii, :, :] = tmp_var50[iii]
   #- save -
-  if varN[ivar] == 'precip':
-    f = open( str("%s/precip_climExtd.bin" % (dir_out) ), 'ab' )
+  if varN[ivar] == 'precip' and iper <= 1976:
+    f = open( str("%s/precip_climExtd.bin" % (dir_out) ), 'wb' )
     var50.reshape([(nt+2)*ny50*nx50]).astype('>f4').tofile(f)
     f.close()
   else:
-    f = open( str("%s/%04i/%s_%04i.bin" % (dir_out, iper, varN[ivar], iper) ), 'ab' )
+    f = open( str("%s/%04i/%s_%04i.bin" % (dir_out, iper, varN[ivar], iper) ), 'wb' )
     var50.reshape([(nt+2)*ny50*nx50]).astype('>f4').tofile(f)
     f.close()
   #
