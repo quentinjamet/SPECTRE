@@ -1,6 +1,6 @@
 #!/bin/bash
 #-- change of file system summer 2018 --
-dirModel='./MITgcm_c67c'	#Checkpoint c67c
+dirModel='../MITgcm_c67c'	#Checkpoint c67c
 optfile='cheyenne_amd64_openmpi'
 
 # COMPILE
