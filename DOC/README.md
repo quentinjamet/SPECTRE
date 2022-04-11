@@ -8,6 +8,8 @@ The following steps will guide you to reproduce the current configuration (many 
 
 ```$ git clone https://github.com/quentinjamet/SPECTRE ```
 
+(Or even better, ```$ git clone https://github.com/your_git/SPECTRE ```, assuming you have previously done a fork of the ```https://github.com/quentinjamet/SPECTRE ``` on your personnal git)
+
 - Go to the config directory:
 
 ```$ cd ./SPECTRE/MITgcm/```
