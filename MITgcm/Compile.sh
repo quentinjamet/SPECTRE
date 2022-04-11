@@ -1,14 +1,7 @@
 #!/bin/bash
-#dirModel='/glade/p/work/qjamet/MITgcm'
 #-- change of file system summer 2018 --
 dirModel='./MITgcm_c67c'	#Checkpoint c67c
 optfile='cheyenne_amd64_openmpi'
-
-#-- switch mpt to impi --
-#module unload mpt/2.15f
-#module load   impi/2017.1.132 
-#-- 0612/2019 --
-# recompile to update mpt libraries
 
 # COMPILE
 cd ./build/
