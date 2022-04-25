@@ -11,7 +11,18 @@
 #PBS -m abe
 #PBS -M your@adress
 
-# export the qsub command into the bash script
+
+#-- load appropriate modules --
+module purge
+module load ncarenv/1.3   
+module load intel/19.1.1 
+module load ncarcompilers/0.5.0   
+module load mpt/2.25   
+module load netcdf/4.8.1
+echo "----------------------------"
+module list
+echo "----------------------------"
+
 
 #-----------------------------------------------------------------------------#
 #     - Run time parameterers for input data, run dir and duration            #
