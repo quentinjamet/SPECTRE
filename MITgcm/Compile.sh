@@ -15,6 +15,12 @@ module list
 echo "----------------------------"
 
 # COMPILE
+if [ ! -d ./build ]; then 
+  echo "First make ./build and ./exe directories:"
+  echo "mkdir build exe"
+  echo "EXIT"
+  exit
+fi
 cd ./build/
 rm -rf ./*
 $dirModel/tools/genmake2 -rootdir=$dirModel -mods=../code -mpi -optfile $dirModel/tools/build_options/$optfile
