@@ -88,21 +88,29 @@ fi
 #                            Initial conditions and restarts                  #
 #-----------------------------------------------------------------------------#
 
-dir_ini=${inDir}/ini_cond_50
-#-- initial conditions --
-ln -s ${dir_ini}/ic${imem}/eta_ini50_ic${imem}.bin	$runDir2/eta_ini.bin
-ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin	$runDir2/s_ini.bin
-ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin	$runDir2/t_ini.bin
-ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin	$runDir2/u_ini.bin
-ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin	$runDir2/v_ini.bin
-ln -s ${dir_ini}/ic${imem}/t2_ini50_ic${imem}.bin	$runDir2/t2_ini.bin
-ln -s ${dir_ini}/ic${imem}/q2_ini50_ic${imem}.bin	$runDir2/q2_ini.bin
-#-- restoring files --
-#ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin        $runDir2/s_relax_ics.bin
-#ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin        $runDir2/t_relax_ics.bin
-#ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin        $runDir2/u_relax_ics.bin
-#ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin        $runDir2/v_relax_ics.bin
-#-- restoring mask --
-#ln -s ${dir_ini}/tsuv_relax_mask.bin			$runDir2/tsuv_rmask.bin
+if [ ${iit} -eq 0 ] ; then
+  dir_ini=${inDir}/ini_cond_50
+  #-- initial conditions --
+  ln -s ${dir_ini}/ic${imem}/eta_ini50_ic${imem}.bin	$runDir2/eta_ini.bin
+  ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin	$runDir2/s_ini.bin
+  ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin	$runDir2/t_ini.bin
+  ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin	$runDir2/u_ini.bin
+  ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin	$runDir2/v_ini.bin
+  ln -s ${dir_ini}/ic${imem}/t2_ini50_ic${imem}.bin	$runDir2/t2_ini.bin
+  ln -s ${dir_ini}/ic${imem}/q2_ini50_ic${imem}.bin	$runDir2/q2_ini.bin
+  #-- restoring files --
+  #ln -s ${dir_ini}/ic${imem}/s_ini50_ic${imem}.bin        $runDir2/s_relax_ics.bin
+  #ln -s ${dir_ini}/ic${imem}/t_ini50_ic${imem}.bin        $runDir2/t_relax_ics.bin
+  #ln -s ${dir_ini}/ic${imem}/u_ini50_ic${imem}.bin        $runDir2/u_relax_ics.bin
+  #ln -s ${dir_ini}/ic${imem}/v_ini50_ic${imem}.bin        $runDir2/v_relax_ics.bin
+  #-- restoring mask --
+  #ln -s ${dir_ini}/tsuv_relax_mask.bin			$runDir2/tsuv_rmask.bin
+else
+  tmpdir=${outDir}/memb${mem_nb}/run$(($yr-1))
+  ln -s ${tmpDir}/ocn/pickup.${iit0}.meta  $runDir2/pickup.${iit0}.meta
+  ln -s ${tmpDir}/ocn/pickup.${iit0}.data  $runDir2/pickup.${iit0}.data
+  ln -s ${tmpDir}/cheapaml/pickup_cheapaml.${iit0}.meta  $runDir2/pickup_cheapaml.${iit0}.meta
+  ln -s ${tmpDir}/cheapaml/pickup_cheapaml.${iit0}.data  $runDir2/pickup_cheapaml.${iit0}.data
+fi
 
 
